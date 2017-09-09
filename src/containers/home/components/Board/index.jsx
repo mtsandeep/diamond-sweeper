@@ -57,19 +57,27 @@ class Board extends Component {
   render() {
     const { row } = this.props;
     return (
-      <div className="board">
-        {
-          this.state.cellsArray.map(key => (
-            <Cell
-              key={key}
-              cellPosition={key}
-              row={row}
-              open={this.state.selections.indexOf(key) > -1}
-              diamond={this.state.diamonds.indexOf(key) > -1}
-              onDiamondSelection={this.handleDiamondSelection}
-              onSelection={this.handleSelection}
-            />
-          ))
+      <div className="game-wrapper">
+        <div className="board">
+          {
+            this.state.cellsArray.map(key => (
+              <Cell
+                key={key}
+                cellPosition={key}
+                row={row}
+                open={this.state.selections.indexOf(key) > -1}
+                diamond={this.state.diamonds.indexOf(key) > -1}
+                onDiamondSelection={this.handleDiamondSelection}
+                onSelection={this.handleSelection}
+              />
+            ))
+          }
+        </div>
+        { this.state.diamondSelections.length === row &&
+          <section className="game-results">
+            <p>You won</p>
+            <p>Score: {this.state.cellsArray.length - this.state.selections.length}</p>
+          </section>
         }
       </div>
     );
