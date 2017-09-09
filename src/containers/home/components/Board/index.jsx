@@ -4,6 +4,14 @@ import Cell from 'components/Cell';
 import './style.scss';
 
 class Board extends Component {
+  constructor() {
+    super();
+    this.state = {
+      diamondSelections: [],
+      selections: [],
+    };
+  }
+
   componentWillMount() {
     const { row } = this.props;
     this.setState({
@@ -34,6 +42,18 @@ class Board extends Component {
     return diamonds;
   }
 
+  handleDiamondSelection = (cell) => {
+    this.setState({
+      diamondSelections: [...this.state.diamondSelections, cell],
+    });
+  }
+
+  handleSelection = (cell) => {
+    this.setState({
+      selections: [...this.state.selections, cell],
+    });
+  }
+
   render() {
     const { row } = this.props;
     return (
@@ -42,8 +62,12 @@ class Board extends Component {
           this.state.cellsArray.map(key => (
             <Cell
               key={key}
+              cellPosition={key}
               row={row}
+              open={this.state.selections.indexOf(key) > -1}
               diamond={this.state.diamonds.indexOf(key) > -1}
+              onDiamondSelection={this.handleDiamondSelection}
+              onSelection={this.handleSelection}
             />
           ))
         }

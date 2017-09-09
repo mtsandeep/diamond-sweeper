@@ -2,23 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Cell extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showDiamond: false,
-    };
-  }
-
   handleClick = () => {
-    const { diamond } = this.props;
-    if (diamond === true && !this.state.showDiamond) {
-      this.setState({
-        showDiamond: true,
-      });
+    const { open, cellPosition, diamond } = this.props;
+    if (open === false) {
+      if (diamond) {
+        this.props.onDiamondSelection(cellPosition);
+      }
+      this.props.onSelection(cellPosition);
     }
   }
 
   render() {
+    const { open, diamond } = this.props;
     return (
       <div
         className="cell"
@@ -27,11 +22,14 @@ class Cell extends Component {
         tabIndex="0"
         onClick={this.handleClick}
       >
-        { this.state.showDiamond &&
+        { !open &&
+          <div className="cover">?</div>
+        }
+        { open && diamond &&
           <span>diamond</span>
         }
-        { !this.state.showDiamond &&
-          <div className="cover">?</div>
+        { open && !diamond &&
+          <span>blank</span>
         }
       </div>
     );
@@ -44,6 +42,10 @@ Cell.defaultProps = {
 
 Cell.propTypes = {
   diamond: PropTypes.bool,
+  cellPosition: PropTypes.number.isRequired,
+  onSelection: PropTypes.func.isRequired,
+  onDiamondSelection: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default Cell;
