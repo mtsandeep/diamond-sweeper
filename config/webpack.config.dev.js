@@ -61,7 +61,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './webpackHtmlTemplate.ejs'),
       appMountId: 'root',
-      title: 'loading...',
+      title: 'Diamond Sweeper',
       inject: false,
       minify: {
         collapseWhitespace: true,
