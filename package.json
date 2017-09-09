@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config ./config/webpack.config.js",
-    "start": "webpack-dev-server --config ./config/webpack.config.dev.js --open --watch"
+    "start": "webpack-dev-server --config ./config/webpack.config.dev.js --open --watch --color"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/mtsandeep/diamond-sweeper#readme",
   "dependencies": {
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },

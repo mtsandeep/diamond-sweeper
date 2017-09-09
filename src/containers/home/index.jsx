@@ -1,8 +1,11 @@
 import React from 'react';
+import Board from './components/Board';
 
 const Home = () => (
   <div>
-    <p>Home page content</p>
+    <Board
+      row={8}
+    />
   </div>
 );
 
