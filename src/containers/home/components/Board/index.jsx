@@ -43,8 +43,13 @@ class Board extends Component {
   }
 
   handleDiamondSelection = (cell) => {
+    const { row, onGameOver } = this.props;
     this.setState({
       diamondSelections: [...this.state.diamondSelections, cell],
+    }, () => {
+      if (this.state.diamondSelections.length === row) {
+        onGameOver(this.state.cellsArray.length - this.state.selections.length);
+      }
     });
   }
 
@@ -57,35 +62,28 @@ class Board extends Component {
   render() {
     const { row } = this.props;
     return (
-      <div className="game-wrapper">
-        <div className="board">
-          {
-            this.state.cellsArray.map(key => (
-              <Cell
-                key={key}
-                cellPosition={key}
-                row={row}
-                open={this.state.selections.indexOf(key) > -1}
-                diamond={this.state.diamonds.indexOf(key) > -1}
-                onDiamondSelection={this.handleDiamondSelection}
-                onSelection={this.handleSelection}
-              />
-            ))
-          }
-        </div>
-        { this.state.diamondSelections.length === row &&
-          <section className="game-results">
-            <p>You won</p>
-            <p>Score: {this.state.cellsArray.length - this.state.selections.length}</p>
-          </section>
+      <section className="board">
+        {
+          this.state.cellsArray.map(key => (
+            <Cell
+              key={key}
+              cellPosition={key}
+              row={row}
+              open={this.state.selections.indexOf(key) > -1}
+              diamond={this.state.diamonds.indexOf(key) > -1}
+              onDiamondSelection={this.handleDiamondSelection}
+              onSelection={this.handleSelection}
+            />
+          ))
         }
-      </div>
+      </section>
     );
   }
 }
 
 Board.propTypes = {
   row: PropTypes.number.isRequired,
+  onGameOver: PropTypes.func.isRequired,
 };
 
 export default Board;

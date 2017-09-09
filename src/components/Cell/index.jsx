@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 class Cell extends Component {
   handleClick = () => {
-    const { open, cellPosition, diamond } = this.props;
+    const { open, cellPosition, diamond, onSelection, onDiamondSelection } = this.props;
     if (open === false) {
       if (diamond) {
-        this.props.onDiamondSelection(cellPosition);
+        onDiamondSelection(cellPosition);
       }
-      this.props.onSelection(cellPosition);
+      onSelection(cellPosition);
     }
   }
 
