@@ -4,7 +4,15 @@ import Cell from 'components/Cell';
 import './style.scss';
 
 class Board extends Component {
-  static generateCellsArray(row) {
+  componentWillMount() {
+    const { row } = this.props;
+    this.setState({
+      cellsArray: this.generateCellsArray(row),
+      diamonds: this.generateDiamondPositions(row),
+    });
+  }
+
+  generateCellsArray = (row) => {
     const limit = row * row;
     const cellsArray = [];
     for (let i = 1; i <= limit; i += 1) {
@@ -13,7 +21,7 @@ class Board extends Component {
     return cellsArray;
   }
 
-  static generateDiamondPositions(row) {
+  generateDiamondPositions = (row) => {
     const diamonds = [];
     const min = 1;
     const max = row * row;
@@ -24,14 +32,6 @@ class Board extends Component {
       }
     }
     return diamonds;
-  }
-
-  componentWillMount() {
-    const { row } = this.props;
-    this.setState({
-      cellsArray: Board.generateCellsArray(row),
-      diamonds: Board.generateDiamondPositions(row),
-    });
   }
 
   render() {
