@@ -1,23 +1,22 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const cssnano = require('cssnano');
 
 module.exports = {
   context: path.resolve(__dirname, '../src'),
   entry: {
     main: [
-      'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:9000',
-      'webpack/hot/only-dev-server',
       'src/index',
     ],
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].bundle.js',
+    filename: '[name].[hash].js',
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   devServer: {
     compress: true,
     port: 9000,
@@ -43,24 +42,26 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => (
-                [
-                  cssnano({
-                    autoprefixer: { browsers: ['last 5 versions'] },
-                    safe: true,
-                  }),
-                ]
-              ),
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => (
+                  [
+                    cssnano({
+                      autoprefixer: { browsers: ['last 5 versions'] },
+                      safe: true,
+                    }),
+                  ]
+                ),
+              },
             },
-          },
-          'sass-loader',
-        ],
+            'sass-loader',
+          ],
+        }),
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -87,8 +88,15 @@ module.exports = {
         preserveLineBreaks: true,
       },
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
+    new UglifyJSPlugin({
+      sourceMap: true,
+    }),
+    new ExtractTextPlugin('styles.[hash].css'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
   ],
   resolve: {
     modules: [
