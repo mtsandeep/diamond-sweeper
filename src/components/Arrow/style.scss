@@ -1,0 +1,32 @@
+$ease: linear;
+
+.arrows {
+  width: 100%;
+  display: inline-block;
+  svg {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    cursor: pointer;
+    overflow: visible;
+    polygon {
+      transition: all 1s $ease;
+      fill: #FF4136;
+    }
+
+    .arrow {
+      animation: arrow-anim 1s $ease infinite;
+    }
+  }
+}
+
+@keyframes arrow-anim {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(1rem);
+		opacity: 0;
+	}
+}

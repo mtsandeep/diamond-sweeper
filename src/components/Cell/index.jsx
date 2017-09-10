@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './style.scss';
 
 class Cell extends Component {
   handleClick = () => {
@@ -28,9 +29,7 @@ class Cell extends Component {
         { open && diamond &&
           <span>diamond</span>
         }
-        { open && !diamond &&
-          <span>blank</span>
-        }
+        { this.props.children }
       </div>
     );
   }
@@ -38,6 +37,7 @@ class Cell extends Component {
 
 Cell.defaultProps = {
   diamond: false,
+  children: null,
 };
 
 Cell.propTypes = {
@@ -46,6 +46,10 @@ Cell.propTypes = {
   onSelection: PropTypes.func.isRequired,
   onDiamondSelection: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 };
 
 export default Cell;

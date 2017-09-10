@@ -57,6 +57,7 @@ class Board extends Component {
   handleSelection = (cell) => {
     this.setState({
       selections: [...this.state.selections, cell],
+      currentCell: cell,
     });
   }
 
@@ -74,10 +75,20 @@ class Board extends Component {
               diamond={this.state.diamonds.indexOf(key) > -1}
               onDiamondSelection={this.handleDiamondSelection}
               onSelection={this.handleSelection}
-            />
+            >
+              { this.state.currentCell === key &&
+                this.state.diamondSelections.indexOf(key) === -1 &&
+                <BoardHint
+                  row={row}
+                  diamonds={this.state.diamonds.filter(x =>
+                    this.state.diamondSelections.indexOf(x) === -1)
+                  }
+                  currentCell={this.state.currentCell}
+                />
+              }
+            </Cell>
           ))
         }
-        <BoardHint row={row} diamonds={this.state.diamonds} />
       </section>
     );
   }

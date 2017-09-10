@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Arrow from 'components/Arrow';
 
 class BoardHint extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentCell: 20,
-    };
-  }
-
   getRowNumber = (cellPosition, row) => Math.ceil(cellPosition / row);
   // we are considering everything starts with 1
 
@@ -22,9 +16,9 @@ class BoardHint extends Component {
   }
 
   getDiamondPositions = () => {
-    const { diamonds, row } = this.props;
-    const currentCellRow = this.getRowNumber(this.state.currentCell, row);
-    const currentCellColumn = this.getColumnNumber(this.state.currentCell, row);
+    const { diamonds, row, currentCell } = this.props;
+    const currentCellRow = this.getRowNumber(currentCell, row);
+    const currentCellColumn = this.getColumnNumber(currentCell, row);
     const diamondPositions = diamonds.map((diamond) => {
       const diamondRow = this.getRowNumber(diamond, row);
       const diamondColumn = this.getColumnNumber(diamond, row);
@@ -69,10 +63,7 @@ class BoardHint extends Component {
   render() {
     const diamondPosition = this.getNearestDiamond();
     return (
-      <p>
-        Next diamond is at angle: {diamondPosition.angle} degrees and
-        {diamondPosition.distance} cells away
-      </p>
+      <Arrow angle={diamondPosition.angle} />
     );
   }
 }
@@ -80,6 +71,7 @@ class BoardHint extends Component {
 BoardHint.propTypes = {
   row: PropTypes.number.isRequired,
   diamonds: PropTypes.arrayOf(PropTypes.number).isRequired,
+  currentCell: PropTypes.number.isRequired,
 };
 
 export default BoardHint;
