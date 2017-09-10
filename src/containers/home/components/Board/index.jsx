@@ -24,6 +24,7 @@ class Board extends Component {
   componentDidMount = () => {
     this.props.componentMethods({
       restartGame: this.restartGame,
+      resumeGame: this.resumeGame,
     });
   }
 
@@ -39,6 +40,11 @@ class Board extends Component {
       selections: [],
       currentCell: null,
     });
+  }
+
+  resumeGame = () => {
+    const progress = JSON.parse(atob(localStorage.progress));
+    this.setState(progress);
   }
 
   generateCellsArray = (row) => {
@@ -78,7 +84,20 @@ class Board extends Component {
     this.setState({
       selections: [...this.state.selections, cell],
       currentCell: cell,
+    }, () => {
+      this.saveProgress(cell);
     });
+  }
+
+  saveProgress = (cell) => {
+    localStorage.setItem('progress', btoa(
+      JSON.stringify({
+        selections: this.state.selections,
+        diamonds: this.state.diamonds,
+        diamondSelections: this.state.diamondSelections,
+        currentCell: cell,
+      }),
+    ));
   }
 
   render() {

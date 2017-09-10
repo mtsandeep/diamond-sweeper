@@ -6,7 +6,7 @@ body {
   color: #444;
 }
 
-.game-results{
+.game-results, .game-resume{
   background: rgba(255,255,255,0.85);
   position: absolute;
   width: 96vh;
@@ -14,4 +14,20 @@ body {
   top: 0;
   left: 2vh;
   text-align: center;
+}
+.btn{
+  margin: 10px;
+  padding: 6px 10px;
+  color: #fff;
+  border: none;
+  box-shadow: 1px 1px 2px #666;
+  border: 1px solid #fff;
+  cursor: pointer;
+
+  &.btn-restart {
+    background: #0e9cef;
+  }
+  &.btn-resume {
+    background: #005A31;
+  }
 }
