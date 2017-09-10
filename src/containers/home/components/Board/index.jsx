@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Cell from 'components/Cell';
+import BoardHint from '../BoardHint';
 import './style.scss';
 
 class Board extends Component {
@@ -76,6 +77,7 @@ class Board extends Component {
             />
           ))
         }
+        <BoardHint row={row} diamonds={this.state.diamonds} />
       </section>
     );
   }
