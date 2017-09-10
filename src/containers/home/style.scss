@@ -1,0 +1,17 @@
+html{
+  background: #6dbdd6;
+}
+body {
+  margin: 0;
+  color: #444;
+}
+
+.game-results{
+  background: rgba(255,255,255,0.85);
+  position: absolute;
+  width: 96vh;
+  height: 100%;
+  top: 0;
+  left: 2vh;
+  text-align: center;
+}

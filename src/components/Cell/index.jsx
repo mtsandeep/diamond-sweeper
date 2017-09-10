@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
+import diamondImage from './images/diamond.png';
 
 class Cell extends Component {
   handleClick = () => {
@@ -18,7 +19,7 @@ class Cell extends Component {
     return (
       <div
         className="cell"
-        style={{ width: 'calc(100%/8)' }}
+        style={{ width: 'calc(12%)', height: '12vh' }}
         role="button"
         tabIndex="0"
         onClick={this.handleClick}
@@ -27,7 +28,7 @@ class Cell extends Component {
           <div className="cover">?</div>
         }
         { open && diamond &&
-          <span>diamond</span>
+          <div className="diamond"><img src={diamondImage} alt="Diamond" /></div>
         }
         { this.props.children }
       </div>

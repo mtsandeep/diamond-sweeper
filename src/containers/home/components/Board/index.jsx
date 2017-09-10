@@ -21,6 +21,26 @@ class Board extends Component {
     });
   }
 
+  componentDidMount = () => {
+    this.props.componentMethods({
+      restartGame: this.restartGame,
+    });
+  }
+
+  componentWillUnMount = () => {
+    this.props.componentMethods(null);
+  }
+
+  restartGame = () => {
+    const { row } = this.props;
+    this.setState({
+      diamonds: this.generateDiamondPositions(row),
+      diamondSelections: [],
+      selections: [],
+      currentCell: null,
+    });
+  }
+
   generateCellsArray = (row) => {
     const limit = row * row;
     const cellsArray = [];
@@ -93,10 +113,14 @@ class Board extends Component {
     );
   }
 }
+Board.defaultProps = {
+  componentMethods: () => {},
+};
 
 Board.propTypes = {
   row: PropTypes.number.isRequired,
   onGameOver: PropTypes.func.isRequired,
+  componentMethods: PropTypes.func,
 };
 
 export default Board;
